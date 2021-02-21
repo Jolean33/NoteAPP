@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>プログラムメモ</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="programNote.css">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="AdditionalScreenBlock"><!--新しいボタンやテキストを追加する画面の裏側-->
+            <i class="fas fa-times close" id="CloseButton"></i>
+            <div id="TextshowBox">
+
+            </div>
+            <div id="warningScreen">
+                    <p id="WarningText">Do you really want to delete this?</p>
+                    <div id="warningButtons">
+                        <P id="NOButton" class="OFF">No</P>
+                        <p id="YESButton" class="OFF">Yes</p>
+                    </div>
+            </div>
+            <div id="AdditionalScreen">
+                <div id="CrossBlock"><!--✖️ボタン-->
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="clear"></div>
+                <div id="Buttons"><!--newButtonとnewTextボタン-->
+                    <p id="A" class="OFF">new<br>Note</p>
+                    <p id="B" class="ON">new<br>Button</p>
+                    <div class="clear"></div>
+                </div>
+                <form>
+                    <!--<form style="height:40%"></form>-->
+                    <div id="TextInputBox"><!--入力欄-->
+                        <input maxlength="32" id="Binput" class="show" type="text" placeholder="Buttons name">
+                        <!--<input id="AinputM" class="close" type="text" placeholder="Buttons name">-->
+                        <i class="fas fa-expand-arrows-alt close" id="zoomButton"></i>
+                        <textarea id="Ainput"class="close" placeholder="Note"></textarea>
+                    </div>
+                </form>
+                <div id="OKbuttonbox">
+                    <div id="OKbutton" class="OFF"><!--OKボタン-->
+                        <p>OK</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mainbox">
+            <div id="selecs">
+                <div class="show" id="Firstselects"><!--1階層-->
+                    <ul>
+                        <!--<li id="mamee" class="show"><input maxlength="32" type="text" value="a" readonly="" style="width: 98%;"><div class="close" style="color: white;"><i class="fas fa-minus"></i></div></li>-->
+                    </ul>
+                </div>
+                <div class="close" id="Secondselects"><!--2階層-->
+                    <ul>
+    
+                    </ul>
+                </div>
+                <div class="close" id="Thirdselects"><!--3階層-->
+                    <ul>
+    
+                    </ul>
+                </div>
+                <div class="close" id="Fourthselects"><!--4階層-->
+                    <ul>
+    
+                    </ul>
+                </div>
+                <div class="close" id="Fifthselects"><!--5階層-->
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="close" id="Sixthselects"><!--6階層-->
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="close" id="Seventhselects"><!--7階層-->
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="close" id="Eighthselects"><!--8階層-->
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div id="SelectLines"><!--戻るボタン-->
+                <ul>
+                    <li id="YellowLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="BlueLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="GreenLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="RedLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="OliveLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="TealLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="LimeLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                    <li id="FuchsiaLine"class="close"><i class="fas fa-arrow-left"> Back </i></li>
+                </ul>
+            </div>
+            <div id="addButtonDiv"><!--プラスボタンとマイナスボタン-->
+                <div id="addButton"><i class="fas fa-plus"></i></div>
+                <div id="removeButton"><i class="fas fa-minus"></i></div>
+                <div id="EditButton"><i class="fas fa-edit"></i></div>
+            </div>
+        </div>
+        <script src="programNote.js"></script>
+    </body>
+</html>
