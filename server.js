@@ -26,6 +26,10 @@ JoelsSQL.connect((err) => {//MySQLへの接続ができなかったときのエ�
     }
     console.log('success');
 });
+async function GetQuery(i)
+{
+  return await JoelsSQL.query('SELECT * FROM Note WHERE place = ?',placeName[i]);
+}
 
 //サーバー側
 app.post('*/api/get_note_data', (req, res, next) => {
@@ -51,14 +55,14 @@ app.post('*/api/get_note_data', (req, res, next) => {
 
     case "get"://フロントにSQLのすべての情報を渡す。フロント側では、このアプリを起動したとき、一番最初にここでSQLの情報を取得して、ボタンを追加していく。まだ完成していないーーーーーーーー
       data = [];
-      let flag = [];
+      //let flag = [];
       for(let i = 0;i < 8;i++)
       {
-        [flag] = await JoelsSQL.query('SELECT * FROM Note WHERE place = ?',placeName[i]);
+        //[flag] = await JoelsSQL.query('SELECT * FROM Note WHERE place = ?',placeName[i]);
 
-          if(error) {console.log(error);}
-          console.log(flag);
-          data.push(flag);
+          //if(error) {console.log(error);}
+          //console.log(flag);
+          data.push(GetQuery(i));
           //console.log(i + " は " + data[i] + " です");//表示される
         
         //console.log(i + " は " + data[i] + " です");//ここにすると表示されない
