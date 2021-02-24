@@ -59,13 +59,7 @@ app.post('*/api/get_note_data', (req, res, next) => {
       for(let i = 0;i < 8;i++)
       {
         //[flag] = await JoelsSQL.query('SELECT * FROM Note WHERE place = ?',placeName[i]);
-
-          //if(error) {console.log(error);}
-          //console.log(flag);
           data.push(GetQuery(i));
-          //console.log(i + " は " + data[i] + " です");//表示される
-        
-        //console.log(i + " は " + data[i] + " です");//ここにすると表示されない
       }
       console.log(data);
       res.send({jsonData:data});
