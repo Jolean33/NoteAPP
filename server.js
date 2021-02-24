@@ -26,7 +26,7 @@ JoelsSQL.connect((err) => {//MySQLへの接続ができなかったときのエ�
     }
     console.log('success');
 });
-async function GetQuery(i)
+async function GetQuery(i)//新しく作った関数
 {
   return await JoelsSQL.query('SELECT * FROM Note WHERE place = ?',placeName[i]);
 }
