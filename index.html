@@ -39,7 +39,7 @@
                         <input maxlength="32" id="Binput" class="show" type="text" placeholder="Buttons name">
                         <i class="fas fa-expand-arrows-alt close" id="zoomButton"></i>
                         <!--<textarea id="Ainput"class="close" placeholder="Note"></textarea>-->
-                        <div id="Ainput" class="close"></div><!--Quillのメモを入力する欄。Quillじゃないやつは上のコメントされているとこ-->
+                        <div id="Ainput" class="close"></div><!--Quillのメモを入力する欄。ここがQuillのdivです--------------------------------->
                     </div>
                 </form>
                 <div id="OKbuttonbox">
@@ -110,7 +110,7 @@
                 <div id="EditButton"><i class="fas fa-edit"></i></div>
             </div>
         </div>
-        <script>
+        <script><!--ここでQuillの設定をする-->
             var quill = new Quill('#Ainput', {
                 theme: 'snow',
                 syntax: true,
