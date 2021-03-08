@@ -20,6 +20,7 @@ $(() => {
     let EditButtonFlag = false;//編集ボタンが押されていたらtrue、押されていなかったらfalse
     let removeButtonID;//マイナスボタンがクリックされたボタンのIDを入れておいて、警告画面でOKが押されたらこのIDを消す
     let CloseButtonIN;
+    let serverJsonData;
     const url = "/api/get_note_data";
     const buttonSet = function(selectar)//ボタンに必要なイベントを一気に追加できる関数
     {
@@ -109,14 +110,8 @@ $(() => {
         //console.log(PlaceOBNumber + " = " + PlaceOB[PlaceOBNumber].ShowButtonID);
     }
 
-
-
-
-
-
-
-
-    const server = function(data)//サーバーと通信する関数。
+    ClassChenge($(".ql-toolbar"),"close","show","close");
+    const server = function(data,DataType)//サーバーと通信する関数。
     {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json; charset=UTF-8");
@@ -134,34 +129,52 @@ $(() => {
 
         }).then((json) => {
             
-            console.log(json);
+            if(DataType)//trueだったらget処理だから、もらったデータをどんどんHTMLに追加していく。falseだったら、addかdelete処理だから、とりあえずデータが送られてきたかだけチェックする。
+            {
+                //console.log(json);
+                for(let i = 0;i < 8;i++)
+                {
+                    nowPlace = $("#" + PlaceOB[i].PlaceName);
+                    for(let u = 0;u < json.jsonData[i].length;u++)
+                    {
+                        console.log(json);
+                        addButtonorNote(json.jsonData[i][u].id , json.jsonData[i][u].class , json.jsonData[i][u].btext , json.jsonData[i][u].atext , "" , json.jsonData[i][u].born , false);
+                        buttonSet($("#" + json.jsonData[i][u].id));
+                    }
+                }  
+                nowPlace = $("#Firstselects");//上のfor文で階層をいじっているので、元に戻す。
+                ClassChenge(nowPlace.find("li"),"show","close","show");
+            }else{
+                if(!json.OK) console.log("err! can't receive from server!");
+            }
             
         }).catch((err) => {
             console.log(err);
         });
     }
 
-    server(JSON.stringify({P:"get"}));//関数を実行（テスト用）
+    server(JSON.stringify({P:"get"}),true);//関数を実行（テスト用）
 
 
 
 
 
-    const addButtonorNote = function (ID, Class, Btext, Atext, deletID, BorN/*falseでボタン,trueでメモ*/,save/*falseでSQLに保存しない,trueで保存する*/)//ボタンやメモを追加された時に実行される関数。
+    function addButtonorNote(ID, Class, Btext, Atext, deleteID, BorN/*falseでボタン,trueでメモ*/,save/*falseでSQLに保存しない,trueで保存する*/)//ボタンやメモを追加された時に実行される関数。
     {
+        console.log("ID = " + ID);
         nowPlace.find("ul").append(`<li id="${ID}" class="close ${Class}"><input maxlength="32" type="text" value=${Btext} readonly><div class="close"><i class="fas fa-minus"></i></div></li>`);//上の階層のid名をclassに追加
         if (BorN) {
             $(`#${ID}`).addClass("Text");
             $("#TextshowBox").append(`<textarea id="${ID}Text" class="close" readonly>${Atext}</textarea>`);
         }
-        for (let i = 0; deletID.length > i; i++)//新しく追加したボタンとTEXTのCLASSに削除用の文字列を追加。
-        {
-            $(`#${ID}`).addClass(`${deletID[i]}fordelet`);
-            if (BorN) { $(`#${ID}Text`).addClass(`${deletID[i]}fordelet`); }
-        }
+        
         if(save)//サーバー側に新しく追加したボタンの情報を渡すーーーーーーーーーーーここでサーバーに追加したボタンやメモのデータを送るーーーーーーーーーーーーーーーーーーー
         {
-            
+            for (let i = 0; deleteID.length > i; i++)//新しく追加したボタンとTEXTのCLASSに削除用の文字列を追加。
+            {
+                $(`#${ID}`).addClass(`${deleteID[i]}fordelet`);//ボタンい削除用のクラスを追加
+                if (BorN) { $(`#${ID}Text`).addClass(`${deleteID[i]}fordelet`); }//メモに削除用のクラスを追加
+            }
             server(JSON.stringify(//サーバーに情報を送る
 
             {//送るjsonデータ
@@ -179,37 +192,11 @@ $(() => {
 
             , place:`${nowPlace.attr("id")}`//新しく追加されたボタン、メモの階層の名前を入れておく
 
-            }));
+            }),false);
+        }else{
+            $(`#${ID}Text`).addClass(Class);//サーバーから送られてきたclassデータは、fordeletとかも全部書いてあるから、saveがtrueの時みたいにいちいち追加する必要がないからここで一気に追加しちゃうぜ
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    const FirstProcess = function ()//このアプリを起動した時に、すべての階層に、SQLに保存されているボタンを追加するための関数。
-    {
-        for(let i = 0;i < 8;i++)
-        {
-            nowPlace = PlaceOB[i].PlaceName;
-            
-        }
-    }
-    //FirstProcess();//試しに実行
     ///////////////////////////////////////////////////
     $("#B").css("background-color", "DimGray");
     $(".fa-angle-up").hide();
@@ -318,7 +305,7 @@ $(() => {
         ClassChenge($(this), "ON", "OFF", "ON");
         $(`#${removeButtonID},.${removeButtonID}fordelet,#${removeButtonID}Text`).remove();//ボタンを削除する。removeButtonIDは削除するボタンのid
         console.log("削除したいボタンの情報をサーバーに送信しました。");
-        server(JSON.stringify({P:"delete" , id:removeButtonID}));//削除したいボタンの情報をserverにおくる
+        server(JSON.stringify({P:"delete" , id:removeButtonID}),false);//削除したいボタンの情報をserverにおくる
         $("#warningScreen,#AdditionalScreenBlock").fadeOut(500);
     });
     $("#NOButton").click(function () {//警告画面のNOボタンをクリックしたときの処理
@@ -331,7 +318,7 @@ $(() => {
             ClassChenge($("#B"), "ON", "OFF", "ON");
             ClassChenge($("#A"), "ON", "OFF", "OFF");
             //ClassChenge($("#Binput"),"show","close","show");
-            ClassChenge($("#Ainput,#zoomButton").val(""), "show", "close", "close");
+            ClassChenge($("#Ainput,#zoomButton,.ql-toolbar").val(""), "show", "close", "close");
             $("#Binput").val("");
             $("#B").css("background-color", "DimGray");
             $("#A").css("background-color", "black");
@@ -344,7 +331,7 @@ $(() => {
         if ($("#A").hasClass("OFF")) {
             ClassChenge($("#B"), "ON", "OFF", "OFF");
             ClassChenge($("#A"), "ON", "OFF", "ON");
-            ClassChenge($("#Ainput,#zoomButton"), "show", "close", "show");
+            ClassChenge($("#Ainput,#zoomButton,.ql-toolbar"), "show", "close", "show");
             //ClassChenge($("#Binput").val(""),"show","close","close");
             $("#Binput").val("");
             $("#A").css("background-color", "DimGray");
@@ -355,23 +342,7 @@ $(() => {
         }
     });
 
-
-
-
-
-
-
-
     ///////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
 
     $("#OKbutton").click(() => {//addscreenのOKボタンを押した時の処理（ボタン、メモを追加したときの処理
         if ($("#Binput").val() != "" && (PlaceOB[PlaceOBNumber].last == false || (PlaceOB[PlaceOBNumber].last == true && nowscreen == "A")))//AinputかBinputのどちらかでも何か入力されていたら、実行
@@ -423,22 +394,7 @@ $(() => {
         }
     });
 
-
-
-
-
-
-
-
     ///////////////////////////////////////////////////
-
-
-
-
-
-
-
-
 
 
     $("#SelectLines").find("li").click(function () {//戻るボタンを押した時の処理。
