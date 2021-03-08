@@ -60,15 +60,15 @@ body{//背景を黒にする
 .show{
     display:block;
 }
-.zoom{//Ainputを大きくするときの設定
+.zoom{//#Ainputを大きくするときの設定------------------ここです---------------------
     position:fixed;
-    top:55px;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:auto;
-    height:85% !important;
-    z-index:9;
+    top:50px;
+    // bottom:0;
+    // left:0;
+    // right:0;
+    //margin:auto;
+    // height:85% !important;
+    // z-index:9;
 }
 .EditButtonS{//メモが開かれた時にEditButtonに付ける設定
     z-index:10;
@@ -214,12 +214,12 @@ body{//背景を黒にする
                 @include inputSet();
             }
             #Ainput{//newTextの入力欄
-                font-size:20px;
+                //font-size:20px;
                 width:95%;
                 height:70%;
                 margin:10px auto;
-                resize: none;
-                outline: none;
+                //resize: none;
+                //outline: none;
                 @include inputSet();
             }
             #zoomButton{//Ainputの画面を大きくするボタン
