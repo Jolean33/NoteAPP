@@ -6,12 +6,15 @@
         <link rel="stylesheet" href="programNote.css">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!--Quill.jsをインストールする。-->
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     </head>
     <body>
         <div id="AdditionalScreenBlock"><!--新しいボタンやテキストを追加する画面の裏側-->
             <i class="fas fa-times close" id="CloseButton"></i>
             <div id="TextshowBox">
-
+            
             </div>
             <div id="warningScreen">
                     <p id="WarningText">Do you really want to delete this?</p>
@@ -34,9 +37,9 @@
                     <!--<form style="height:40%"></form>-->
                     <div id="TextInputBox"><!--入力欄-->
                         <input maxlength="32" id="Binput" class="show" type="text" placeholder="Buttons name">
-                        <!--<input id="AinputM" class="close" type="text" placeholder="Buttons name">-->
                         <i class="fas fa-expand-arrows-alt close" id="zoomButton"></i>
-                        <textarea id="Ainput"class="close" placeholder="Note"></textarea>
+                        <!--<textarea id="Ainput"class="close" placeholder="Note"></textarea>-->
+                        <div id="Ainput" class="close"></div><!--Quillのメモを入力する欄。Quillじゃないやつは上のコメントされているとこ-->
                     </div>
                 </form>
                 <div id="OKbuttonbox">
@@ -107,6 +110,15 @@
                 <div id="EditButton"><i class="fas fa-edit"></i></div>
             </div>
         </div>
+        <script>
+            var quill = new Quill('#Ainput', {
+                theme: 'snow',
+                syntax: true,
+                toolbar: [
+                    ['code-block']
+                ]
+            });
+        </script>
         <script src="programNote.js"></script>
     </body>
 </html>
