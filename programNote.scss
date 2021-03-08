@@ -60,7 +60,7 @@ body{//背景を黒にする
 .show{
     display:block;
 }
-.zoom{//#Ainputを大きくするときの設定------------------ここです---------------------
+.zoom{//#Ainputを大きくするときの設定------------------ここでQuillのdivにposition:fixedを指定しています。---------------------
     position:fixed;
     top:50px;
     // bottom:0;
@@ -213,7 +213,7 @@ body{//背景を黒にする
                 font-size:30px;
                 @include inputSet();
             }
-            #Ainput{//newTextの入力欄
+            #Ainput{//newTextの入力欄---------------------------------ここがQuillのdivです-----------------------------------------
                 //font-size:20px;
                 width:95%;
                 height:70%;
